@@ -11,67 +11,36 @@ import UIKit
 class PostListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
    
     
-    
-    @objc func refreshControlPulled(){
-        PostController.fetchPosts {
-            
-            
-            DispatchQueue.main.async {
-                
-                self.refreshControl.endRefreshing()
-                
-            }
-            
-        }
-    }
-    //purpose of this function is to refresh the data
-    
-    
-    
-    func reloadTableView(){
-        
-        DispatchQueue.main.async {
-            
-            self.postTableView.reloadData()
-            
-        }
-    }
-    //purpose of this function is to quickly reload the data
-    
-    
-    
     let postController = PostController()
-    // why did i make this^^
     var refreshControl: UIRefreshControl!
 
     
     @IBOutlet weak var postTableView: UITableView!
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        reloadTableView()
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
         postTableView.addSubview(refreshControl)
         
         
-        
         postTableView.delegate = self
         postTableView.dataSource = self
+        
+        
         postTableView.estimatedRowHeight = 45
         postTableView.rowHeight = UITableView.automaticDimension
         
-        // why dont these work??
+       
         
         PostController.fetchPosts {
             self.reloadTableView()
-        } // Do any additional setup after loading the view.
+        }
     }
+   
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,6 +68,7 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
         
         
     }
+    
     
     
     func presentNewPostAlert(){
@@ -140,44 +110,16 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-            
         }
-        
         
         alertController.addAction(postAction)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true)
-        
-        
-        
-        //Create the alert controller
-        //                let alertController = UIAlertController(title: "🐉🐉🐉🐉🔥🔥🔥🔥", message: "Enter Quote", preferredStyle: .alert)
-        //
-        //                alertController.addTextField { (textField) in
-        //                    textField.placeholder = "Enter your quote"
-        //                }
-        //
-        //                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        //
-        //                alertController.addAction(cancelAction)
-        //
-        //                let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
-        //
-        //                    guard let quoteTextField = alertController.textFields?.first else {return}
-        //
-        //                    PostController.shared.createQuote(with: quoteTextField.text ?? "")
-        //                }
-        //                alertController.addAction(addAction)
-        //
-        //                present(alertController, animated: true)
-        //            }
-        
-        
-        
-        
-        
     }
+    
+    
+    
     func presentErrorAlert(){
         let alertController = UIAlertController(title: "Error", message: "the text fields are missing information, try again", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -186,10 +128,34 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    //reload Rows
-   
     
-   
+    func reloadTableView(){
+        
+        DispatchQueue.main.async {
+            
+            self.postTableView.reloadData()
+            
+        }
+    }
+    
+    @objc func refreshControlPulled(){
+        PostController.fetchPosts {
+            
+            
+            DispatchQueue.main.async {
+                
+                self.refreshControl.endRefreshing()
+                
+            }
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     
 }

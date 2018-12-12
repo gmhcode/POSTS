@@ -82,7 +82,11 @@ class PostController: Codable {
     }
     
     
-//    if posts.last.text = 
+//    if posts.last.text =
+    
+    
+    
+    
     
     static func addNewPostWith(username: String, text: String, completion: @escaping () -> Void){
         let newPost = Post(text: text, username: username)
