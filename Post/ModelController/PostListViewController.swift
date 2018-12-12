@@ -21,7 +21,7 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
                 self.refreshControl.endRefreshing()
                 
             }
-            self.reloadTableView()
+            
         }
     }
     //purpose of this function is to refresh the data
@@ -53,6 +53,7 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        reloadTableView()
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
@@ -96,6 +97,7 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func addButtonAction(_ sender: Any) {
         presentNewPostAlert()
         
+        
     }
     
     
@@ -129,6 +131,7 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 PostController.addNewPostWith(username: username, text: text, completion: {
                     self.reloadTableView()
+                    
                 })
                 
             }else {
@@ -182,11 +185,22 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    
+    //reload Rows
+   
+    
+   
+    
+    
 }
 
 extension PostListViewController{
     
+    
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+       
         
         if indexPath.row >= (PostController.posts.count - 1){
            

@@ -49,7 +49,7 @@ class PostController: Codable {
         
         let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
             
-            if let error = error {
+            if error != nil {
                 completion()
                 return
             }
